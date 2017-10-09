@@ -1,0 +1,31 @@
+<div>
+	<% if flash[:notice] %>
+		<p class="notice"> <%= flash[:notice] %> </p>
+	<% elsif flash[:error] %>
+		<p id="error"> <%= flash[:error] %> </p>
+	<% end %>
+<%= form_tag class: "w3-container" do %>	
+		<h1 class="heading">USER LOGIN PAGE</h1>
+<fieldset>
+	<div>
+		<%= label_tag :name, 'USERNAME:', class: 'w3-text-green label-tag', id: "username-login-user" %>
+		<%= text_field_tag :name, params[:name], class: "w3-input w3-border w3-sand textTag", placeholder: "Enter your username here"%>
+		<br/><br/>
+		<%= label_tag :password, 'PASSWORD:', class: "w3-text-green label-tag" %>
+		<%= password_field_tag :password, params[:password], class: "w3-input w3-border w3-sand textTag", placeholder: "Enter your password here" %>
+	</div>
+	<div class="btn-container">
+		<br>
+		<%= submit_tag "Login as User", class:"w3-btn w3-brown submit-btn" %>
+	</div>
+</fieldset>	
+	<div>
+	<br/>
+		<%= link_to "Login as Admin", "/admins/login", class: "alternate-link" %>
+		<br/>
+		<br/>
+		<%= link_to "New User? Sign up.", "/users/new", class: 'user-signup' %>
+		<%= link_to "New Admin? Sign up.", "/admins/new", class: 'admin-signup' %>
+	</div>
+	<% end %>
+</div>

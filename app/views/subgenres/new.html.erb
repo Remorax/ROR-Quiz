@@ -1,0 +1,28 @@
+<% if session[:admin_id] %>
+	<%= link_to 'Logout', '/admins/logout', class: "logout-link" %>
+	<h1 class="heading">New Subgenre</h1>
+
+	<%= render 'form', subgenre: @subgenre %>
+	<% @genre = Genre.find(params[:genre_id]) %>
+	<table style="width: 100%; padding-top: 20px">
+		<tr>
+			<td style="width: 33%; text-align: left;">
+				<%= link_to 'Subgenres', {controller: "subgenres", genre_id: @genre.id}, class: "view-link" %>
+			</td>
+			<td style="width: 33%; text-align: center;">
+				<%= link_to 'Back to Genre', genre_path(@genre), class: "back-link" %>
+			</td>
+			<td style="width: 33%; text-align: right;">
+				<%= link_to 'Home', {controller: "admins", action: "welcome", id: session[:admin_id]}, class: "back-link"  %>	
+			</td>
+		</tr>
+	</table>
+<% else %>
+	<p class="error"> You are not logged in as admin. Unauthorized access </p>
+	<% unless session[:user_id] %>
+		<%= link_to 'Login as Admin', '/admins/login' %><br/><br/>
+		<%= link_to 'Login as User', '/users/login' %>
+	<% else %>
+		<%= link_to 'Go back to User homepage', controller: "users", action: "welcome", id: session[:user_id] %>
+	<% end %>
+<% end %> 

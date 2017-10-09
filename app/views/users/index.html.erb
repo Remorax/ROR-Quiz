@@ -1,0 +1,40 @@
+<% if session[:admin_id] %>
+  <%= link_to 'Logout', '/admins/logout', class: "logout-link" %>
+  <h1 class="heading">Listing users</h1>
+
+  <%if notice %>
+  <p class="notice"><%= notice %></p>
+  <% end %>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th colspan="1"></th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @users.each do |user| %>
+        <tr>
+          <td id="show-name"><%= user.name %></td>
+          <td><%= link_to 'Show', user, class: "tr-view-link"%></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  <br>
+  <div class="link-container">
+      <%= link_to "Home", {controller: "admins", action: "welcome", id: session[:admin_id]}, class: "routing-link"  %>
+  </div>
+<% else %>
+  <p class="error"> You are not logged in as an admin. Unauthorized access </p>
+  <% unless session[:user_id] %>
+    <%= link_to 'Login as an admin', '/admins/login' %>
+    <br/>
+    <%= link_to 'Login as a user', '/users/login' %>
+  <% else %>
+    <%= link_to 'Go back to User homepage', controller: "users", action: "welcome", id: session[:user_id] %>
+  <% end %>
+<% end %>

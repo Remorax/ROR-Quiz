@@ -1,0 +1,129 @@
+<% if session[:admin_id] %>
+  <%= link_to 'Logout', '/admins/logout', class: "logout-link" %>
+  <p class="notice"><%= notice %></p>
+  <% oneProblemExists = false %>  
+  <% @problems.each do |problem| %>
+    <%if (problem.genreID.to_s == params[:genre_id]) && (problem.subgenreID.to_s == params[:subgenre_id])%>
+      <% oneProblemExists = true %>
+      <% break %>
+    <% end %>
+  <% end %>
+  <% if oneProblemExists %>
+    <h1 class="heading">Problems</h1>
+    <div class="genre-desc"> Genre:  <%=Genre.find(params[:genre_id]).name%> </div>
+    <div class="subgenre-desc"> Subgenre:  <%=Subgenre.find(params[:subgenre_id]).name%> </div>
+    <table>
+      <thead>
+        <tr class="problem-tr">
+          <th>Question</th>
+          <th>A</th>
+          <th>B</th>
+          <th>C</th>
+          <th>D</th>
+          <th>Answer</th>
+          <th>Type</th>
+          <th colspan="3"></th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% @problems.each do |problem| %>
+          <%if (problem.genreID.to_s == params[:genre_id]) && (problem.subgenreID.to_s == params[:subgenre_id])%>
+            <% @genre = Genre.find(problem.genreID) %>
+            <% @subgenre = Subgenre.find(problem.subgenreID) %>
+            <tr class="problem-tr">
+              <td><%= problem.question %></td>
+              <td><%= problem.a %></td>
+              <td><%= problem.b %></td>
+              <td><%= problem.c %></td>
+              <td><%= problem.d %></td>
+              <td>
+                <%if problem.answer.length == 1%>
+                  Option <%= problem.answer %>
+                <% else %>
+                  Options <%= problem.answer %>
+                <% end %>
+              </td>
+              <td><%= (problem.questionType==1)?("Single Choice"):("Multiple Choice") %></td>
+              <td><%= link_to 'Show', problem, class: "tr-view-link" %></td>
+              <td><%= link_to 'Edit', edit_problem_path(problem), class: "tr-view-link" %></td>
+              <td><%= link_to 'Destroy', problem, method: :delete, data: { confirm: 'Are you sure?' }, class: "tr-view-link" %></td>
+            </tr>
+          <% end %>
+        <% end %>
+      </tbody>
+    </table>
+    <div class="link-container"><%= link_to 'New Problem', {controller: 'problems', action: 'new', genre_id: params[:genre_id], subgenre_id: params[:subgenre_id]}, class: "routing-link" %></div>
+  <% else %>
+  <br/>
+    You haven't created any problems yet! Click  <%= link_to 'here', controller: 'problems', action: 'new', genre_id: params[:genre_id], subgenre_id: params[:subgenre_id] %> to create one in this genre and subgenre. <br/> <br/>
+  <% end %>
+  <% @subgenre = Subgenre.find(params[:subgenre_id]) %>
+  <table style="width: 100%">
+    <tr>
+      <td style="width: 50%">
+        <%= link_to 'Home', {controller: "admins", action: "welcome", id: session[:admin_id]}, class: "view-link"  %>
+      </td>
+      <td style="width: 50%; text-align: right;">
+        <%= link_to 'Back', subgenre_path(@subgenre), class: "view-link" %>  
+      </td>
+    </tr>
+  </table>
+<% else %>
+  <% unless session[:user_id] %>
+    <p class="error"> You are not logged in. Unauthorized access </p>
+    <%= link_to 'Login as Admin', '/admins/login' %><br/><br/>
+    <%= link_to 'Login as User', '/users/login' %>
+  <% else %>
+      <%= link_to 'Logout', '/users/logout', class: "logout-link" %>
+      <p class="notice"><%= notice %></p>
+      <% oneProblemExists = false %>  
+      <% @problems.each do |problem| %>
+        <%if (problem.genreID.to_s == params[:genre_id]) && (problem.subgenreID.to_s == params[:subgenre_id])%>
+          <% oneProblemExists = true %>
+          <% break %>
+        <% end %>
+      <% end %>
+      <% if oneProblemExists %>      
+        <h1 class="heading">Problems</h1>
+        <table>
+          <thead>
+            <tr class="problem-tr">
+              <th>Question</th>
+              <th>A</th>
+              <th>B</th>
+              <th>C</th>
+              <th>D</th>
+              <th>Type</th>
+              <th colspan="1"></th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <% @problems.each do |problem| %>
+              <%if (problem.genreID.to_s == params[:genre_id]) && (problem.subgenreID.to_s   == params[:subgenre_id])%>
+                <% @genre = Genre.find(problem.genreID) %>
+                <% @subgenre = Subgenre.find(problem.subgenreID) %>
+                <tr class="problem-tr">
+                  <td><%= problem.question %></td>
+                  <td><%= problem.a %></td>
+                  <td><%= problem.b %></td>
+                  <td><%= problem.c %></td>
+                  <td><%= problem.d %></td>
+                  <td><%= (problem.questionType==1)?("Single Choice"):("Multiple Choice") %></td>
+                  <td><%= link_to 'Attempt', problem %></td>
+                </tr>
+              <% end %>  
+            <% end %>
+          </tbody>
+        </table>
+        <br>
+      <% else %>
+        <br/>
+          No problems have been created in this subgenre yet:(. Do come back later! <br/> <br/>
+      <% end %>
+      <% @subgenre = Subgenre.find(params[:subgenre_id]) %>
+      <%= link_to 'Back to Subgenre', subgenre_path(@subgenre), class: "back-link", style: "display:inline-block;" %> <br>
+      <div class="link-container-right"> <%= link_to 'Take me Home', {controller: "users", action: "welcome", id: session[:user_id]}, class: "view-link", style: "display:inline-block;"  %></div>
+  <% end %>
+<% end %>   

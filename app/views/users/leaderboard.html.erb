@@ -1,0 +1,27 @@
+<% if session[:user_id] || session[:admin_id] %>
+
+	<h1 class="heading"> LEADERBOARD </h1>
+	<br/>
+	<% scoreList = [] %>
+	<% User.all.each do |user| %>
+		<% scoreList.push([user, user.score]) %>
+	<% end %>	
+	<% scoreList = scoreList.sort{|a,b| b[1] <=> a[1]} %>
+	<% scoreList.each_with_index do |user, index| %>
+		<p class="show-attr">
+		  <%= index+1 %>.
+		  <strong>Name:</strong>
+		  <%= user[0].name %>
+		</p>
+		<p style="margin-left:18px;" class="show-attr">
+		  <strong>Score:</strong>
+		  <%= user[0].score %>
+		</p><br/>
+	<%end%>
+	<% if params[:problem_id] %>
+		<% problem = Problem.find(params[:problem_id]) %>
+		<div class="link-container"><%= link_to 'Back to problem', problem, class:"routing-link" %></div>
+	<% else %>
+		<div class="link-container"><%= link_to 'Home', {controller: "admins", action: "welcome", id: session[:admin_id]}, class: "routing-link" %></div>	
+	<% end %>	
+<% end %>	

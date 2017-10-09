@@ -1,0 +1,37 @@
+<% unless (session[:admin_id] || session[:user_id])  %>
+	<%if flash[:notice] %>
+		<p class="notice"><%= notice %></p>
+	<% end %>
+	<h1 class="heading">NEW USER</h1>
+
+	<%= render 'form', user: @user %>
+	<br>
+	<%= link_to 'Create an Admin account', '/admins/new', class: "alternate-link" %>
+	<br/><br/>
+	<table style="width: 100%;">
+		<tr style="width: 100%">
+			<td style="width: 50%;">
+				<%= link_to 'Login as Admin', '/admins/login', class: 'admin-signup' %>
+			</td>
+			<td style="width: 50%;">
+				<%= link_to 'Login as User', '/users/login', class: 'user-signup' %>
+			</td>
+		</tr>
+	</table>
+	
+	<br/>
+	<br/><br/>
+
+<% else %>
+	<%if session[:admin_id] %>
+		<p class="error">You are already logged in as admin.</p>
+		<br/>
+		<%= link_to 'Home', controller: 'admins', action: 'welcome', id: session[:admin_id] %>   |    <%= link_to 'Logout', '/admins/logout' %>
+		<br/>
+	<%else%>
+		<p class="error">You are already logged in as a user.</p>
+		<br/>
+		<%= link_to 'Home', controller: 'users', action: 'welcome', id: session[:user_id] %>   |    <%= link_to 'Logout', '/users/logout' %>
+		<br/>
+	<%end%>
+<%end%>

@@ -1,0 +1,14 @@
+<h1 class="heading" style="font-size:2.5em">Editing Problem</h1>
+
+<%= render 'form', problem: @problem %>
+
+<table style="width: 100%;">
+	<tr style="width: 100%">
+		<td style="width: 50%;">
+			<%= link_to 'Show', @problem, class: 'view-link' %>
+		</td>
+		<td style="width: 50%; text-align: right;">
+			<%= link_to 'Back', {controller: "problems", genre_id: @problem.genreID, subgenre_id: @problem.subgenreID}, class: 'back-link' %>
+		</td>
+	</tr>
+</table>

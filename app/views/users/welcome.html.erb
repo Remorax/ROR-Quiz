@@ -1,0 +1,27 @@
+<% if session[:user_id] %>
+	<%if notice %>
+	<p class="notice"><%= notice %></p>
+	<% end %>
+	<h1 class="heading"> Homepage</h1>
+
+		<% user = User.find_by(id:session[:user_id]) %>
+		<%= link_to 'Logout', '/users/logout', class: 'logout-link' %>
+
+		<p class="login-msg"> Logged in as <%=user.name%></p>
+
+		<%= link_to 'View Profile', user, class: "view-link" %><br>
+        <%= link_to 'Edit Profile', edit_user_path(user), class: "edit-link" %><br> 
+        <%= link_to 'Delete account', user, method: :delete, data: { confirm: 'Are you sure?' }, class: "delete-link" %>
+        <br/><br/>
+		<p class="link-container"><%= link_to 'Take me to the genres page', '/genres', class:"routing-link" %></p>
+
+<% else %>
+	<p class="error"> You are not logged in as a user. Unauthorized access </p>
+	<% unless session[:admin_id] %>
+		<%= link_to 'Login as an admin', '/admins/login' %>
+    	<br/>
+    	<%= link_to 'Login as a user', '/users/login' %>
+	<% else %>
+		<%= link_to 'Go back to Admin homepage', controller: "admins", action: "welcome", id: session[:admin_id] %>
+	<% end %>
+<% end %> 

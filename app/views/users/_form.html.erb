@@ -1,0 +1,33 @@
+<%= form_with(model: user, local: true) do |form| %>
+  <% if user.errors.any? %>
+    <div class="error_explanation">
+      <h2><%= pluralize(user.errors.count, "error") %> prohibited this user from being saved:</h2>
+
+      <ul>
+      <% user.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+<fieldset>
+  <div class="field">
+    <%= form.label :name, "USERNAME:", class: 'w3-text-green label-tag', id: "username-create-user" %>
+    <%= form.text_field :name, id: :user_name, class: "w3-input w3-border w3-sand textTag", placeholder: "Enter your username here" %>
+  </div>
+
+  <div class="field">
+    <%= form.label :password, 'PASSWORD:', class: "w3-text-green label-tag", id: "password-create-user" %>
+    <%= form.password_field :password, id: :user_password, class: "w3-input w3-border w3-sand textTag", placeholder: "Enter your password here"  %>
+  </div>
+
+  <div class="field">
+    <%= form.label :confirm_password, 'CONFIRM PASSWORD:', class: "w3-text-green label-tag", id: "confirm-password-create-user" %>
+    <%= form.password_field :confirm_password, id: :user_password_confirmation, class: "w3-input w3-border w3-sand textTag", placeholder: "Confirm password"  %>
+  </div>
+
+  <div class="actions btn-container">
+    <%= form.submit "Submit", {:class => "w3-btn w3-brown submit-btn"} %>
+  </div>
+</fieldset>
+<% end %>

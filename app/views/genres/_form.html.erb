@@ -1,0 +1,23 @@
+<%= form_with(model: genre, local: true) do |form| %>
+  <% if genre.errors.any? %>
+    <div class="error_explanation">
+      <h2><%= pluralize(genre.errors.count, "error") %> prohibited this genre from being saved:</h2>
+
+      <ul>
+      <% genre.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <fieldset>
+    <div class="field">
+      <%= form.label :name, "GENRE NAME", class: 'w3-text-green label-tag', id: "name-create-genre" %>
+      <%= form.text_field :name, id: :genre_name, class: "w3-input w3-border w3-sand textTag", placeholder: "Enter genre name here" %>
+    </div>
+
+    <div class="actions btn-container">
+      <%= form.submit "Submit", {:class => "w3-btn w3-brown submit-btn"} %>
+    </div>
+  </fieldset>
+<% end %>

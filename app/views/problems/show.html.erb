@@ -1,0 +1,199 @@
+<% if session[:admin_id] %>
+  <%= link_to 'Logout', '/admins/logout', class: "logout-link" %>
+  <p class="notice"><%= notice %></p>
+
+<p class="show-attr">
+  <strong>Question:</strong>
+  <%= @problem.question %>
+</p>
+
+<p class="show-attr">
+  <strong>Option A:</strong>
+  <%= @problem.a %>
+</p>
+
+<p class="show-attr">
+  <strong>Option B:</strong>
+  <%= @problem.b %>
+</p>
+
+<p class="show-attr">
+  <strong>Option C:</strong>
+  <%= @problem.c %>
+</p>
+
+<p class="show-attr">
+  <strong>Option D:</strong>
+  <%= @problem.d %>
+</p>
+
+<p class="show-attr">
+  <strong>Genre:</strong>
+  <% @genre = Genre.find(@problem.genreID) %>
+  <%= @genre.name %>
+</p>
+
+<p class="show-attr">
+  <strong>Subgenre:</strong>
+  <% @subgenre = Subgenre.find(@problem.subgenreID) %>
+  <%= @subgenre.name %>
+</p>
+
+<p class="show-attr">
+  <strong>Answer:</strong>
+  <%if @problem.answer.length == 1%>
+    Option <%= @problem.answer %>
+  <% else %>
+    Options <%= @problem.answer %>
+  <% end %>  
+</p>
+
+<p class="show-attr">
+  <strong>Question Type:</strong>
+  <% if (@problem.questionType=="1") %>
+    Single Choice
+  <% else %>
+    Multiple Choice
+  <% end %>    
+</p>
+<table style="width: 100%;">
+    <tr>
+      <td style="width: 33%; text-align: left;">
+        <p class="link-container"><%= link_to 'Edit', edit_problem_path(@problem, genre_id: @genre.id, subgenre_id: @subgenre.id), class: "routing-link" %></p>
+      </td>
+      <td style="width: 33%; text-align: center;">
+        <p class="link-container"><%= link_to 'Back', {controller: "problems", genre_id: @genre.id, subgenre_id: @subgenre.id}, class: "routing-link" %></p>
+      </td>
+      <td style="width: 33%; text-align: right;">
+        <p class="link-container"><%= link_to 'Back to Subgenre',  subgenre_path(@subgenre), class:"routing-link", style:"text-shadow: 1px 1px 2px black; " %><br/></p>
+      </td>
+    </tr>
+  </table>
+
+<% else %>
+  <% unless session[:user_id] %>
+    <p class="error"> You are not logged in. Unauthorized access </p>
+    <%= link_to 'Login as Admin', '/admins/login' %><br/><br/>
+    <%= link_to 'Login as User', '/users/login' %>
+  <% else %>
+    <% @genre = Genre.find(@problem.genreID) %>
+    <% @subgenre = Subgenre.find(@problem.subgenreID) %>
+    <%= link_to 'Logout', '/users/logout', class: "logout-link" %>
+    <p class="notice"><%= notice %></p>
+    <% user = User.find(session[:user_id]) %>
+    <% prevAnsList = user.answerString.split(",") %>
+          <% totalQuestions, attemptedQuestions, correctQuestions, incorrectAttempts = Problem.where(genreID: @genre.id).where(subgenreID: @subgenre.id).length, 0, 0, 0 %>
+        <% attemptedQuestionsArray = [] %>
+        <% for prevAns in prevAnsList do %>
+          <% parameters = prevAns.split("#") %>
+          <% if @problem.genreID ==Problem.find(parameters[0]).genreID && @problem.subgenreID == Problem.find(parameters[0]).subgenreID%>
+            <% if(parameters[3]=="1") %>
+              <% correctQuestions += 1 %>
+            <% else %>
+              <% attemptedQuestionsArray.push(parameters[0]) %>
+              <% incorrectAttempts += 1 %>  
+            <% end %>
+          <% end %>    
+        <% end %>
+        <% attemptedQuestions = attemptedQuestionsArray.uniq.length %>
+    <table style="width: 100%">
+      <tr>
+        <td style="width: 25%; text-align: left; vertical-align: top;">
+          <%if @problem.prev.genreID == @genre.id && @problem.prev.subgenreID == @subgenre.id %>   
+            <%= link_to '<< Previous', @problem.prev, class:"view-link" %>
+          <% end %>
+        </td>
+        <td style="width: 50%">
+          <div class="scoreboard">
+            <%= link_to 'View Leaderboard',  {controller: "users", action: "leaderboard", problem_id: @problem.id}, class: "leaderboard-link" %>
+            <p class="show-attr-scoreboard">Score: <%=user.score%></p>
+            <p class="show-attr-scoreboard">Total questions: <%=totalQuestions%></p>
+            <p class="show-attr-scoreboard">Correct questions: <%=correctQuestions%></p>
+            <p class="show-attr-scoreboard">Unattempted questions: <%=totalQuestions - correctQuestions - attemptedQuestions%></p>
+            <p class="show-attr-scoreboard">Incorrect attempts: <%=incorrectAttempts%></p>
+          </div>
+        </td>
+        <td style="width: 25%; text-align: right;vertical-align: top;">
+          <%if @problem.next.genreID == @genre.id && @problem.next.subgenreID == @subgenre.id %>
+              <%= link_to 'Next >>', @problem.next, class:"view-link" %>
+          <% end %>
+        </td>
+      </tr>
+    </table>
+    <h3 class="question">Question:<h3>
+    <h4 class="problem-statement"><%= @problem.question %></h4>
+    <div class="question-form">
+    <%= form_with(model: user, local: true) do |form| %>
+      <% if (@problem.questionType==1) %>
+        <% defaultChecked = "A" %>
+        <% for prevAns in prevAnsList do %>
+        <% parameters = prevAns.split("#") %>
+          <% if(parameters[0]==@problem.id.to_s) %>
+            <% defaultChecked = parameters[1] %>
+          <% end %>
+        <% end %>    
+         <div class="field option-div">
+          <%= form.radio_button :opt, "A", :id => 1, :checked => (defaultChecked=="A")? true : false  %>
+          <%= form.label :opt, @problem.a, style: 'display: inline-block',class: "option"%>
+        </div>
+        <div class="field option-div">
+          <%= form.radio_button :opt, "B", :id => 2, :checked => (defaultChecked=="B")? true : false  %>
+          <%= form.label :opt, @problem.b, style: 'display: inline-block',class: "option" %>
+        </div>
+        <div class="field option-div">
+          <%= form.radio_button :opt, "C", :id => 3, :checked => (defaultChecked=="C")? true : false  %>
+          <%= form.label :opt, @problem.c, style: 'display: inline-block',class: "option" %>
+        </div>
+        <div class="field option-div">
+          <%= form.radio_button :opt, "D", :id => 4, :checked => (defaultChecked=="D")? true : false  %>
+          <%= form.label :opt, @problem.d, style: 'display: inline-block',class: "option" %>
+        </div>
+      <% else %>
+        <% aChecked, bChecked, cChecked, dChecked = false, false, false, false %>        
+        <% for prevAns in prevAnsList do %>
+          <% parameters = prevAns.split("#") %>
+          <% if(parameters[0]==@problem.id.to_s) %>
+            <% defaultCheckedList = parameters[1].split("*") %>
+            <% aChecked = defaultCheckedList.include? "A" %>
+            <% bChecked = defaultCheckedList.include? "B" %>
+            <% cChecked = defaultCheckedList.include? "C" %>
+            <% dChecked = defaultCheckedList.include? "D" %>
+          <% end %>
+        <% end %>
+        <div class="option-div">
+          <%= form.label :answerA, class: "option" do %>
+          <%= form.check_box :answerA, :checked => aChecked %> <%= t 'activerecord.attributes.my_model.' + @problem.a %>
+          <% end %>
+        <br/>
+        </div>
+        <div class="option-div">
+        <%= form.label :answerB, class: "option" do %>
+          <%= form.check_box :answerB, :checked => bChecked %> <%= t 'activerecord.attributes.my_model.' + @problem.b %>
+        <% end %><br/>
+      </div><div class="option-div">
+        <%= form.label :answerC, class: "option" do %>
+          <%= form.check_box :answerC, :checked => cChecked %> <%= t 'activerecord.attributes.my_model.' + @problem.c %>
+        <% end %><br/></div>
+        <div class="option-div">
+        <%= form.label :answerD, class: "option" do %>
+          <%= form.check_box :answerD, :checked => dChecked %> <%= t 'activerecord.attributes.my_model.' + @problem.d %>
+        <% end %><br/>
+      </div>
+      <% end %>  
+      <div class="field">
+        <%= hidden_field_tag(:questionID, @problem.id) %>
+      </div>  
+      <div class="actions problem-btn">
+        <%= form.submit "Submit", {:class=> "w3-btn w3-brown"}  %>
+      </div>
+    </div>
+    <%end%>
+    <table style="width: 100%;">
+      <tr>
+        <td style=" width: 33%;"><%= link_to 'Home', {controller: "users", action: "welcome", id: session[:user_id]}, class: "view-link" %></td>
+        <td style="text-align: center; width: 33%;"> <%= link_to 'Back', {controller: "problems", genre_id: @genre.id, subgenre_id: @subgenre.id}, class: "view-link" %></td>
+        <td style="text-align: right; width: 33%;"><%= link_to 'Back to Subgenre', subgenre_path(@subgenre), class: "view-link" %></td>
+      </tr>
+    </table>
+  <% end %>
+<% end %>   

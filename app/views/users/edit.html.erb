@@ -1,0 +1,18 @@
+ <% if session[:user_id] %>
+	<%= link_to 'Logout', '/users/logout', class: "logout-link" %>
+	<h1 class="heading">Editing User</h1>
+
+	<%= render 'form', user: @user %>
+
+	<%= link_to 'Take me to the homepage',  {controller: "users", action: "welcome", id: session[:user_id]}, class: 'back-link' %>
+<% else %>
+  <p class="error"> You are not logged in as a user. Unauthorized access </p>
+  <% unless session[:admin_id] %>
+    <%= link_to 'Login as an admin', '/admins/login' %>
+    <br/>
+    <%= link_to 'Login as a user', '/users/login' %>
+  <% else %>
+    <%= link_to 'Go back to Admin homepage', controller: "admins", action: "welcome", id: session[:admin_id] %>
+  <% end %>
+<% end %>
+

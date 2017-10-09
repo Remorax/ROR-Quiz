@@ -1,0 +1,43 @@
+<% if session[:admin_id] %>
+	<%= link_to 'Logout', '/admins/logout', class: "logout-link" %>
+	<p class="notice"><%= notice %></p>
+
+	<p class="show-attr">
+	  <strong>Name:</strong>
+	  <%= @genre.name %>
+	</p>
+	<table style="width: 100%; padding-top: 50px">
+		<tr>
+			<td style="width: 50%;">
+				<%= link_to 'All genres', genres_path, class: "view-link" %>				
+			</td>
+			<td style="width: 50%; text-align: right;">
+				<%= link_to 'Edit', edit_genre_path(@genre), class: "view-link" %>
+			</td>
+		</tr>
+	</table>
+	<div class="link-container"><%= link_to 'VIEW SUBGENRES', {controller: "subgenres", genre_id: @genre.id}, class: "routing-link" %></div>
+	
+	<br/>
+<% else %>
+	<% unless session[:user_id] %>
+		<p class="error"> You are not logged in. Unauthorized access </p>
+		<%= link_to 'Login as Admin', '/admins/login' %>
+	<% else %>
+		<%= link_to 'Logout', '/users/logout', class: "logout-link" %>
+		<p class="notice"><%= notice %></p>
+
+		<p class="show-attr">
+		  <strong>Name:</strong>
+		  <%= @genre.name %>
+		</p>
+		<%= link_to 'Back', genres_path, class: "view-link" %>
+		<div class="link-container-right">
+			<%= link_to 'Home', {controller: "users", action: "welcome", id: session[:user_id]}, class: "back-link" %>
+		</div>
+		<br/>
+		<div class="link-container">
+			<%= link_to 'View the subgenres of ' + @genre.name, {controller: "subgenres", genre_id: @genre.id}, class: "routing-link" %>			
+		</div>
+	<% end %>
+<% end %> 	

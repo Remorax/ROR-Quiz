@@ -1,0 +1,81 @@
+<% if session[:admin_id] %>
+  <%= link_to 'Logout', '/admins/logout', class: "logout-link" %>
+  <p class="notice"><%= notice %></p>
+  <% oneSubgenreExists = false %>  
+  <% Subgenre.where(genreID: params[:genre_id]).each do |subgenre| %>
+    <% oneSubgenreExists = true %>
+  <% end %>
+  <% if oneSubgenreExists %>    
+    <h1 class="heading">Subgenres</h1>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th colspan="3"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% Subgenre.where(genreID: params[:genre_id]).each do |subgenre| %>
+            <tr>
+              <td><%= subgenre.name %></td>
+              <td><%= link_to 'Show', subgenre, class:"tr-view-link" %></td>
+              <td><%= link_to 'Edit', edit_subgenre_path(subgenre, genre_id: subgenre.genreID), class:"tr-view-link" %></td>
+              <td><%= link_to 'Destroy', subgenre, method: :delete, data: { confirm: 'Are you sure?' }, class:"tr-view-link" %></td>
+            </tr>
+          <% end %>
+      </tbody>
+    </table>
+
+    <br>
+    <div class="link-container"><%= link_to 'New Subgenre', {controller: 'subgenres', action: 'new', genre_id: params[:genre_id]}, class:"routing-link", style: "text-shadow: 1px 1px 2px black; display:inline-block" %></div>
+  <% else %>
+    <br/>
+    You haven't created any subgenres yet! Click  <%= link_to 'here', controller: 'subgenres', action: 'new', genre_id: params[:genre_id] %> to create one in this genre. <br/> <br/>
+  <% end %>
+  <% @genre = Genre.find(params[:genre_id]) %>
+  <table style="width: 100%">
+    <tr>
+      <td style="width: 50%">
+        <%= link_to 'Back', genre_path(@genre), class: "view-link" %>  
+      </td>
+      <td style="width: 50%; text-align: right;">
+        <%= link_to 'Home', {controller: "admins", action: "welcome", id: session[:admin_id]}, class: "view-link"  %>
+      </td>
+    </tr>
+  </table>
+<% else %>
+  <% unless session[:user_id] %>
+    <p class="error"> You are not logged in. Unauthorized access </p>
+    <%= link_to 'Login as Admin', '/admins/login' %><br/><br/>
+    <%= link_to 'Login as User', '/users/login' %>
+  <% else %>
+    <%= link_to 'Logout', '/users/logout', class: "logout-link" %>
+    <p class="notice"><%= notice %></p>
+
+    <h1 class="heading">Subgenres</h1>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th colspan="1"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% Subgenre.where(genreID: params[:genre_id]).each do |subgenre| %>
+            <tr>
+              <td><%= subgenre.name %></td>
+              <td class="tr-view-link"><%= link_to 'Show', subgenre %></td>
+            </tr>
+          <% end %>
+      </tbody>
+    </table>
+
+    <br>
+
+    <% @genre = Genre.find(params[:genre_id]) %>
+    <%= link_to 'Back to Genre', genre_path(@genre), class: "back-link", style: "display:inline-block;" %><br/>
+    <div class="link-container-right"><%= link_to 'Home', {controller: "users", action: "welcome", id: session[:user_id]}, class: "view-link"  %></div>
+  <% end %>
+<% end %>   

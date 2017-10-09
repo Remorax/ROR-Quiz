@@ -1,0 +1,75 @@
+<%= form_with(model: problem, local: true) do |form| %>
+  <% if problem.errors.any? %>
+    <div class="error_explanation">
+      <h2><%= pluralize(problem.errors.count, "error") %> prohibited this problem from being saved:</h2>
+
+      <ul>
+      <% problem.errors.full_messages.each do |message| %>
+      <% if message[0..1] == 'A ' || message[0..1] == 'B ' || message[0..1] == 'C ' || message[0..1] == 'D ' %>
+          <% message = "Option " + message %>
+        <% end %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :question, "QUESTION", class: 'w3-text-green labelp-tag', id: "question-create-problem" %>
+    <%= form.text_area :question, id: :problem_question, class: "w3-input w3-border w3-sand problemTag", placeholder: "Enter question here" %>
+  </div>
+  <br/>
+
+  <div class="field">
+    <%= form.label :a, "Option A", class: 'w3-text-green labelp-tag', id: "opta-create-problem" %>
+    <%= form.text_field :a, id: :problem_a, class: "w3-input w3-border w3-sand problemTag", placeholder: "Enter option A here" %>
+  </div>
+
+  <div class="field">
+    <%= form.label :b, "Option B", class: 'w3-text-green labelp-tag', id: "optb-create-problem" %>
+    <%= form.text_field :b, id: :problem_b, class: "w3-input w3-border w3-sand problemTag", placeholder: "Enter option B here" %>
+  </div>
+
+  <div class="field">
+    <%= form.label :c, "Option C", class: 'w3-text-green labelp-tag', id: "optc-create-problem" %>
+    <%= form.text_field :c, id: :problem_c, class: "w3-input w3-border w3-sand problemTag", placeholder: "Enter option C here" %>
+  </div>
+
+  <div class="field">
+    <%= form.label :d, "Option D", class: 'w3-text-green labelp-tag', id: "optd-create-problem" %>
+    <%= form.text_field :d, id: :problem_d, class: "w3-input w3-border w3-sand problemTag", placeholder: "Enter option D here" %>
+  </div>
+
+  <div class="field">
+  <br/>
+  <table>
+    <tr style="padding-bottom: 0px">
+      <td>
+         <p style="color: #00cc66; margin-left: 200px; font-size: 20px;">Answer(s):</p>
+      </td>
+      <td>
+        <%= form.label :answerA, "Answer A", class: 'w3-text-green labelp-tag', id: "ansa-create-problem" do %>
+        <%= form.check_box :answerA %> <%= t 'activerecord.attributes.my_model.optionA' %>
+      <% end %>
+      <%= form.label :answerB, "Answer B", class: 'w3-text-green labelp-tag', id: "ansb-create-problem" do %>
+        <%= form.check_box :answerB %> <%= t 'activerecord.attributes.my_model.optionB' %>
+      <% end %>
+      <%= form.label :answerC, "Answer C", class: 'w3-text-green labelp-tag', id: "ansc-create-problem" do %>
+        <%= form.check_box :answerC %> <%= t 'activerecord.attributes.my_model.optionC' %>
+      <% end %>
+      <%= form.label :answerD, "Answer D", class: 'w3-text-green labelp-tag', id: "ansd-create-problem" do %>
+        <%= form.check_box :answerD %> <%= t 'activerecord.attributes.my_model.optionD' %>
+      <% end %>
+      </td>
+    </tr>
+  </table>
+ 
+    
+    <br/>
+   </div>
+
+  <div class="actions btn-container" style="margin-top: 0px; margin-bottom: 0px">
+    <%= form.submit "Submit", {:class => "w3-btn w3-brown submit-btn"} %>
+  </div>
+  <br/>
+<% end %>

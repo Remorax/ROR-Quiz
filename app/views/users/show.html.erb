@@ -1,0 +1,61 @@
+<% if session[:admin_id] %>
+	<%= link_to 'Logout', '/admins/logout', class: "logout-link" %>
+	<p class="notice"><%= notice %></p>
+
+	<p>
+	  <strong>Name:</strong>
+	  <%= @user.name %>
+	</p>
+
+	<p>
+	  <strong>Score:</strong>
+	  <%= @user.score %>
+	</p>
+
+	<p>
+	  <strong>Answers:</strong> <br/><br/>
+	  <% answers = @user.answerString.split(",") %>
+	  <% for answer in answers do %>
+	  	  <% parameters = answer.split("#")	%>
+		  Problem: <%= Problem.find(parameters[0])[:question] %> <br/>
+		  User Answer: <%= parameters[1].split("*").join(",") %> <br/>
+		  Correct Answer: <%= parameters[2].split(";").join(",") %> <br/>
+		  Verdict: <%= (parameters[3]=="1")? "Correct" : "Wrong" %> <br/><br/>
+	  <% end %>	  
+	</p>
+
+	<%= link_to 'Edit', edit_user_path(@user) %> |
+	<%= link_to 'Back', users_path %>
+<% else %>
+	<% unless session[:user_id] %>
+		<p class="error"> You are not logged in. Unauthorized access </p>
+		<%= link_to 'Login as an admin', '/admins/login', class: 'admin-signup' %>
+    	<br/>
+    	<%= link_to 'Login as a user', '/users/login', class: 'user-signup' %>
+	<% else %>
+		<%= link_to 'Logout', '/users/logout', class: "logout-link" %>
+		<p class="notice"><%= notice %></p>
+		<p class="show-attr">
+		  <strong>Name:</strong>
+		  <%= @user.name %>
+		</p>
+		<p class="show-attr">
+		  <strong>Score:</strong>
+		  <%= @user.score %>
+		</p>
+		<p class="show-attr">
+		  <strong>Answers:</strong> <br/><br/>
+		  <% answers = @user.answerString.split(",") %>
+		  <% for answer in answers do %>
+		  	  <% parameters = answer.split("#")	%>
+			  Problem: <%= Problem.find(parameters[0])[:question] %> <br/>
+			  User Answer: <%= parameters[1].split("*").join(",") %> <br/>
+			  Correct Answer: <%= parameters[2].split(";").join(",") %> <br/>
+			  Verdict: <%= (parameters[3]=="1")? "Correct" : "Wrong" %> <br/><br/>
+		  <% end %>	  
+		</p>
+		<%= link_to 'Edit Profile', edit_user_path(@user), class: "edit-link" %>
+		<div class="link-container-right">
+		<%= link_to 'Homepage', {:controller=> "users", :action=> "welcome", :id=> session[:user_id]}, class:"back-link" %></div>
+	<% end %>
+<% end %>

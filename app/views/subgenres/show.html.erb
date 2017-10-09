@@ -1,0 +1,64 @@
+<% if session[:admin_id] %>
+	<%= link_to 'Logout', '/admins/logout', class: "logout-link" %>
+	<p class="notice"><%= notice %></p>
+
+	<p class="show-attr">
+	  <strong>Name:</strong>
+	  <%= @subgenre.name %>
+	</p>
+	<p class="show-attr">
+	  <strong>Genre Name:</strong>
+	  <% unless @subgenre.genreID %>
+	  	<% genre = Genre.find("1") %>
+	  <% else %>
+	  	<% genre = Genre.find(@subgenre.genreID) %>
+	  <% end %>	
+	  <%= genre.name %>
+	</p>
+
+	<table style="width: 100%; padding-top: 50px">
+		<tr>
+			<td style="width: 33%;">
+				<%= link_to 'Edit', {controller: "problems", genre_id: @subgenre.genreID, subgenre_id: @subgenre.id}, class: "edit-link" %>			
+			</td>
+			<td style="width: 33%; text-align: center;">
+				<%= link_to 'Back', {controller: "subgenres", genre_id: @subgenre.genreID}, class: "back-link" %>
+			</td>
+			<td style="width: 33%; text-align: right;">
+				<%= link_to 'Back to Genre', genre_path(genre), class: "view-link" %>
+			</td>
+		</tr>
+	</table>
+	<div class="link-container"><%= link_to 'Problems', {controller: "problems", genre_id: @subgenre.genreID, subgenre_id: @subgenre.id}, class: "routing-link" %></div>
+
+<% else %>
+	<% unless session[:user_id] %>
+		<p class="error"> You are not logged in. Unauthorized access </p>
+		<%= link_to 'Login as Admin', '/admins/login' %><br/><br/>
+		<%= link_to 'Login as User', '/users/login' %>
+	<% else %>
+		<%= link_to 'Logout', '/admins/logout', class: "logout-link" %>
+		<p class="notice"><%= notice %></p>
+
+		<p class="show-attr">
+		  <strong>Name:</strong>
+		  <%= @subgenre.name %>
+		</p>
+		<p class="show-attr">
+		  <strong>Genre Name:</strong>
+		  <% unless @subgenre.genreID %>
+		  	<% genre = Genre.find("1") %>
+		  <% else %>
+		  	<% genre = Genre.find(@subgenre.genreID) %>
+		  <% end %>	
+		  <%= genre.name %>
+		</p>
+		<table style="width: 100%">
+			<td><%= link_to 'Back', {controller: "subgenres", genre_id: @subgenre.genreID}, class: "view-link" %></td>
+		<td class="middle-tr"><%= link_to 'Back to Genre', genre_path(genre), class: "delete-link" %></div></td>
+		<td class="right-tr"><%= link_to 'Home', {controller: "users", action: "welcome", id: session[:user_id]}, class: "back-link" %></td>
+		</table>
+		
+		<div class="link-container"><%= link_to 'Problems List', {controller: "problems", genre_id: @subgenre.genreID, subgenre_id: @subgenre.id}, class: "routing-link" %></div>
+	<% end %>
+<% end %> 	

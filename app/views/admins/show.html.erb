@@ -1,0 +1,19 @@
+<% if session[:admin_id] %>
+	<%= link_to 'Logout', '/admins/logout', class: "logout-link" %>
+	<p class="notice"><%= notice %></p>
+
+	<p class="show-attr">
+	  <strong>Name:</strong>
+	  <%= @admin.name %>
+	</p>
+
+	<%= link_to 'Back', admins_path %>
+<% else %>
+	<p class="error"> You are not logged in as admin. Unauthorized access </p>
+	<% unless session[:user_id] %>
+		<%= link_to 'Login as Admin', '/admins/login' %><br/><br/>
+		<%= link_to 'Login as User', '/users/login' %>
+	<% else %>
+		<%= link_to 'Go back to User homepage', controller: "users", action: "welcome", id: session[:user_id] %>
+	<% end %>
+<% end %> 	

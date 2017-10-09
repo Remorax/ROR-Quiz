@@ -1,0 +1,404 @@
+body{
+	background-image: url('dna.jpg');
+	margin-right: 20px;
+	margin-left: 20px;
+}
+.heading {
+  color: #00cc66;
+  text-align: center;
+  font-size: 3.5em;
+  text-shadow: 1px 1px 2px #00cc66; 
+  text-transform: uppercase;
+}
+
+.heading-type {
+  color: #00cc66;
+  text-align: center;
+  font-size: 2em;
+  text-shadow: 1px 1px 2px #00cc66; 
+  text-transform: uppercase;
+}
+.w3-container {
+	size: 50;
+}
+.textTag{
+	width: 50%;
+	margin-left: 400px;
+	margin-top: 60px;
+}
+
+.label-tag{
+    display: inline-block;
+    float: left;
+    clear: left;
+    width: 300px;
+    text-align: right;
+    margin-top: 70px;
+    font-size: 20px;
+}
+#username-login-user{
+	margin-top: 5px;
+}
+.btn-container{
+	text-align: center;
+	margin-top: 60px;
+	font-size: 20px;
+	margin-bottom: 20px;
+}
+.alternate-link{
+	text-align: center;
+	font-size: 20px;
+	display: block;
+	text-decoration: none;
+}
+.leaderboard-link{
+text-align: center;
+	font-size: 18px;
+	display: block;
+	text-decoration: none;
+	text-transform: uppercase;	
+}
+#confirm-password-create-admin, #password-create-admin, #username-create-admin, #confirm-password-create-user, #password-create-user, #username-create-user{
+	margin-top: 10px; 
+}
+
+a:link {
+    color: yellow;
+}
+
+/* visited link */
+a:visited {
+    color: purple;
+}
+
+/* mouse over link */
+a:hover {
+    color: brown;
+}
+
+/* selected link */
+a:active {
+    color: red;
+}
+
+
+.leaderboard-link:link {
+    color: red;
+}
+
+/* visited link */
+.leaderboard-link:visited {
+    color: blue;
+}
+
+/* mouse over link */
+.leaderboard-link:hover {
+    color: brown;
+}
+
+/* selected link */
+.leaderboard-link:active {
+    color: red;
+}
+.user-signup{
+	text-align: left;
+	float: left;
+	font-size: 20px;
+	display: inline-block;
+	text-decoration: none;
+	margin-left: 10px;
+}
+.admin-signup{
+	text-align: right;
+	font-size: 20px;
+	display: inline-block;
+	float: right;
+	text-decoration: none;
+	margin-right: 10px;
+}
+.legend-text{
+	text-align: center;
+	color: red;
+	font-size: 20px;
+}
+fieldset{
+	background-color:#CCC;
+	border:2px solid yellow;
+}
+#username-login-user, #username-login-admin, #name-create-genre{
+	margin-top: 5px;
+}
+.notice{
+	color: green;
+	font-weight: bold;
+	font-size: 15px;
+  text-transform: uppercase;
+}
+.error{
+	color: red;
+	font-size: 15px;
+	text-shadow: 1px 1px 2px black; 
+  	text-transform: uppercase;
+}
+.error_explanation{
+	color: red;
+}
+#user_password, #admin_password{
+	margin-bottom: 10px; 
+}
+.login-msg{
+	color: red;
+	display: block;
+	font-weight: bold;
+	text-transform: uppercase;
+	font-size: 20px;
+	text-shadow: 1px 1px 2px black; 
+}
+.logout-link{
+	color: red;
+	text-align: right;
+	font-size:20px; 
+	display: inline-block;
+	float: right;
+	text-decoration: none;
+	text-transform: uppercase;
+}
+.view-link{
+	text-decoration: none;
+	text-transform: uppercase;
+	font-size: 18px;
+	display: inline;
+}
+
+.edit-link{
+	text-decoration: none;
+	text-transform: uppercase;
+	font-size: 18px;
+	margin-top: 30px;
+	display: inline;
+}
+
+.delete-link{
+	text-decoration: none;
+	text-transform: uppercase;
+	font-size: 18px;
+}
+
+.back-link{
+	text-decoration: none;
+	text-transform: uppercase;
+	font-size: 18px;
+	margin-top: 30px;
+	display: inline;
+}	
+.routing-link{
+	text-transform: uppercase;
+	text-decoration: none;
+	text-transform: uppercase;
+	font-size: 30px;
+	text-align: center;
+	text-shadow: 1px 1px 2px black; 
+}
+
+.genre-desc{
+	text-shadow: 1px 1px 2px black; 
+	text-transform: uppercase;
+  	color: orange;
+  	font-weight: bold;
+  	font-size: 20px;
+  	display: inline-block;
+  	padding-bottom: 20px;
+}
+
+.subgenre-desc{
+	text-shadow: 1px 1px 2px black; 
+	text-transform: uppercase;
+  	color: orange;
+  	font-weight: bold;
+  	font-size: 20px;
+  	text-align: right;
+  	float: right;
+  	display: inline-block;
+  	padding-bottom: 20px;
+}
+
+.middle-tr{
+	text-align: center;
+	text-shadow: none;
+}
+
+.right-tr{
+	text-align: right;
+	text-shadow: none;
+}
+.link-container{
+	text-align: center;
+	margin-top: 40px;
+	margin-bottom: 40px;
+}
+
+.labelp-tag{
+	display: inline-block;
+    float: left;
+    clear: left;
+    width: 300px;
+    text-align: right;
+    font-size: 20px;
+}
+
+#question-create-problem{
+	margin-top: 20px;
+}
+
+.problemTag{
+	width: 50%;
+	margin-left: 400px;
+	margin-top: 20px;
+}
+.link-container-right{
+	text-align: right;
+	float: right;
+	display: inline;
+	text-shadow: 2px 2px 2px black;
+}
+
+.link-container-middle{
+	text-align: center;
+	float: center;
+}
+
+.show-attr{
+	text-shadow: 1px 1px 2px black; 
+  	color: #00cc66;
+  	margin-top: 30px;
+  	font-size: 20px;
+  	display: block;
+}
+
+.show-attr-scoreboard{
+	text-shadow: 0.1px 0.1px 0.2px #006400; 
+  	color: #00cc66;
+  	font-size:15px;
+  	display: block;
+}
+
+th{
+	text-shadow: 1px 1px 2px black;
+	color: red;
+	text-transform: uppercase;
+	font-size: 30px; 
+	padding-bottom: 15px;
+}
+
+tr{
+	text-shadow: 1px 1px 2px black;
+	color: #00cc66;
+	text-transform: uppercase;
+	font-size: 20px;
+	font-weight: bold;
+	padding-bottom: 10px;
+}
+
+.tr-view-link{
+	text-decoration: none;
+	text-transform: uppercase;
+	font-size: 15px;
+	margin-left: 20px;
+	margin-right: : 20px;
+	display: inline;
+}
+
+.tr-edit-link{
+	text-decoration: none;
+	text-transform: uppercase;
+	font-size: 15px;
+	margin-left: 20px;
+	margin-right: : 20px;
+	display: inline;
+}
+
+.tr-delete-link{
+	text-decoration: none;
+	text-transform: uppercase;
+	font-size: 15px;
+	margin-left: 20px;
+	margin-right: : 20px;
+	display: inline;
+}
+
+.problem-tr{
+	text-align: center;
+	font-size: 15px;
+}
+
+.question{
+	text-transform: uppercase;
+	font-weight: bold;
+	color: red;
+	text-shadow: 1px 1px 2px black;
+	margin-top: 30px;
+	margin-bottom: 15px;
+	font-size: 25px;
+}
+
+.problem-statement{
+	color: #ff3300;
+	text-shadow: 1px 1px 2px black;
+	margin-top: 20px;
+	margin-bottom: 20px;
+	font-size: 20px;
+}
+
+.option{
+	color: #00ff00;
+	text-shadow: 1px 1px 2px black;
+}
+
+.option-div {
+	margin-top: 20px;	
+	margin-bottom: 20px;
+	font-size: 18px;
+}
+.scoreboard{
+	border: 2px solid red;
+	width: 100%;
+	height: 30%;
+	text-align: center;
+	margin: auto;
+	background-color: #CCC;
+}
+input[type="checkbox"]{
+  width: 30px; /*Desired width*/
+  height: 30px; /*Desired height*/
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+input[type="radio"]{
+  width: 30px; /*Desired width*/
+  height: 20px; /*Desired height*/
+}
+
+.problem-btn{
+	text-align: center;
+	margin-bottom: 20px;
+}
+
+#show-name{
+	text-transform: none;
+}
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, or any plugin's
+ * vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any other CSS/SCSS
+ * files in this directory. Styles in this file should be added after the last require_* statement.
+ * It is generally better to create a new file per style scope.
+ *
+ *= require_tree .
+ *= require_self
+ */

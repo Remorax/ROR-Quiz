@@ -1,0 +1,33 @@
+<%= form_with(model: admin, local: true, :html => {:class => "w3-container"}) do |form| %>
+  <% if admin.errors.any? %>
+    <div class="error_explanation">
+      <h2><%= pluralize(admin.errors.count, "error") %> prohibited this admin from being saved:</h2>
+
+      <ul>
+      <% admin.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+<fieldset>
+  <div class="field">
+    <%= form.label :name, "USERNAME:", class: 'w3-text-green label-tag', id: "username-create-admin" %>
+    <%= form.text_field :name, id: :admin_name, class: "w3-input w3-border w3-sand textTag", placeholder: "Enter your username here" %>
+  </div>
+
+  <div class="field">
+    <%= form.label :password, 'PASSWORD:', class: "w3-text-green label-tag", id: "password-create-admin" %>
+    <%= form.password_field :password, id: :admin_password, class: "w3-input w3-border w3-sand textTag", placeholder: "Enter your password here"  %>
+  </div>
+
+  <div class="field">
+    <%= form.label :confirm_password, 'CONFIRM PASSWORD:', class: "w3-text-green label-tag", id: "confirm-password-create-admin" %>
+    <%= form.password_field :confirm_password, id: :admin_password_confirmation, class: "w3-input w3-border w3-sand textTag", placeholder: "Confirm password"  %>
+  </div>
+
+  <div class="actions btn-container">
+    <%= form.submit "Submit", {:class => "w3-btn w3-brown submit-btn"} %>
+  </div>
+  </fieldset>
+<% end %>
